@@ -46,7 +46,7 @@ def get_pd(gpu='1', delay=1, arg=None):
     if (df_u.values == None).all():
         df_null.pop('gpuid')
         df_null.pop('gpubusid')
-        os.system('clear')
+        # os.system('clear')
         print(df_null)
         return df_null
     dv = df.values
@@ -63,7 +63,7 @@ def get_pd(gpu='1', delay=1, arg=None):
     df_new = pd.DataFrame(dv, columns=df.columns._values)
     df_new.pop('gpuid')
     df_new.pop('gpubusid')
-    os.system('clear')
+    # os.system('clear')
     print(df_new)
     # time.sleep(delay)
     return df_new
@@ -87,5 +87,5 @@ def get_info():
     )
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0',port=1111)
+    app.run(debug=False,host='0.0.0.0',port=54321)
 

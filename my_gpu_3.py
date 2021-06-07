@@ -16,8 +16,6 @@ parser = argparse.ArgumentParser(description='GPU Status monitor')
 parser.add_argument('gpu', type=str)
 parser.add_argument('--delay', default=1,type=int)
 
-df_global = None
-
 app = Flask(__name__)
 
 def get_current_user(conn):
@@ -34,14 +32,6 @@ def get_current_gpu(conn):
     pd2 = pd.read_csv(StringIO(ret2), header=None, names=['index', 'gpubusid', '显卡温度℃', '显卡利用率%', '显存MB'])
     return pd2
 
-def dv2df(dv):
-    df_new = pd.DataFrame(dv, columns=['pid', '进程名', '已用显存MB', 'gpuid', 'index', 'gpubusid', '显卡温度℃', '显卡利用率%', '显存MB'])
-    df_new.pop('gpuid')
-    df_new.pop('gpubusid')
-    os.system('clear')
-    print(df_new)
-    return df_new
-
 def get_pd(gpu='1', delay=1, arg=None):
     if(arg):
         args = parser.parse_args()
@@ -55,11 +45,10 @@ def get_pd(gpu='1', delay=1, arg=None):
     df_gnull= pd.DataFrame(None, columns=df_g.columns._values)
     df_null = pd.concat([df_unull, df_g], axis=1)   # none+gpuinfo
     df = pd.concat([df_u, df_gnull], axis=1)    # process+none
-    df_global = df
     if (df_u.values == None).all():
         df_null.pop('gpuid')
         df_null.pop('gpubusid')
-        os.system('clear')
+        # os.system('clear')
         print(df_null)
         return df_null.to_html(classes='data')
     dv = df.values
@@ -76,7 +65,7 @@ def get_pd(gpu='1', delay=1, arg=None):
     df_new = pd.DataFrame(dv, columns=df.columns._values)
     df_new.pop('gpuid')
     df_new.pop('gpubusid')
-    os.system('clear')
+    # os.system('clear')
     print(df_new)
     return df_new.to_html(classes='data')
 
@@ -107,5 +96,5 @@ def get_info():
     )
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0',port=1111)
+    app.run(debug=False,host='0.0.0.0',port=54321)
 
