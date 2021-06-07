@@ -1,1 +1,1 @@
-python my_gpu_2.py
+python my_gpu_3.py
